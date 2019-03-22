@@ -50,9 +50,11 @@
   <ItemGroup>
     <Compile Include="LaTeX.cs" />
     <Compile Include="Origami.cs" />
+    <Compile Include="Parsimonious.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Unassigned.cs" />
     <Compile Include="Variable.cs" />
   </ItemGroup>
   <ItemGroup>

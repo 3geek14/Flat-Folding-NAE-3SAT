@@ -5,142 +5,240 @@ namespace Converter
 {
     public class Origami
     {
-        public static string BeginningOfFile(string format)
+        public enum Format { LaTeX, SVG, FOLD };
+        public enum Type { Unassigned, Parsimonious, Assigned };
+
+        #region Format-Specific Methods
+        public static string BeginningOfFile(Format format)
         {
-            if (format.Equals("LaTeX"))
+            switch (format)
             {
-                return LaTeX.BeginningOfFile;
+                case Format.LaTeX:
+                    return LaTeX.BeginningOfFile;
+                case Format.SVG:
+                    throw new NotImplementedException();
+                case Format.FOLD:
+                    throw new NotImplementedException();
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
-        public static string EndOfFile(string format)
+        public static string DrawLine(Format format, Point startPoint, Point endPoint)
         {
-            if (format.Equals("LaTeX"))
+            switch (format)
             {
-                return LaTeX.EndOfFile;
+                case Format.LaTeX:
+                    return LaTeX.DrawLine(startPoint, endPoint);
+                case Format.SVG:
+                    throw new NotImplementedException();
+                case Format.FOLD:
+                    throw new NotImplementedException();
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
-        public static int PaperHeight(string type, int numVars)
+        public static string DrawLine(Format format, Point point, Vector vector)
         {
-            if (type.Equals("Unassigned"))
+            switch (format)
             {
-                return 9 + numVars * 5;
+                case Format.LaTeX:
+                    return LaTeX.DrawLine(point, vector);
+                case Format.SVG:
+                    throw new NotImplementedException();
+                case Format.FOLD:
+                    throw new NotImplementedException();
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
-        public static int PaperStart(string type)
+        public static string EndOfFile(Format format)
         {
-            if (type.Equals("Unassigned"))
+            switch (format)
             {
-                return 2;
+                case Format.LaTeX:
+                    return LaTeX.EndOfFile;
+                case Format.SVG:
+                    throw new NotImplementedException();
+                case Format.FOLD:
+                    throw new NotImplementedException();
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
+        }
+        #endregion
+        #region Lengths
+        public static int PaperHeight(Type type, int numVars)
+        {
+            switch (type)
+            {
+                case Type.Unassigned:
+                    return Unassigned.PaperHeight(numVars);
+                case Type.Parsimonious:
+                    return Parsimonious.PaperHeight(numVars);
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
-        public static int NegateWidth(string type)
+        public static int WireHeight(Type type, int index)
         {
-            if (type.Equals("Unassigned"))
+            switch (type)
             {
-                return 5;
+                case Type.Unassigned:
+                    return Unassigned.WireHeight(index);
+                case Type.Parsimonious:
+                    return Parsimonious.WireHeight(index);
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
-        public static int ClauseLeftPadding(string type)
+        public static int PaperStart(Type type)
         {
-            if (type.Equals("Unassigned"))
+            switch (type)
             {
-                return 2;
+                case Type.Unassigned:
+                    return Unassigned.PaperStart;
+                case Type.Parsimonious:
+                    return Parsimonious.PaperStart;
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
-        public static int ClauseGap1(string type)
+        public static int NegateWidth(Type type)
         {
-            if (type.Equals("Unassigned"))
+            switch (type)
             {
-                return 3;
+                case Type.Unassigned:
+                    return Unassigned.NegateWidth;
+                case Type.Parsimonious:
+                    return Parsimonious.NegateWidth;
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
-        public static int ClauseGap2(string type)
+        public static int ClauseLeftPadding(Type type)
         {
-            if (type.Equals("Unassigned"))
+            switch (type)
             {
-                return 5;
+                case Type.Unassigned:
+                    return Unassigned.ClauseLeftPadding;
+                case Type.Parsimonious:
+                    return Parsimonious.ClauseLeftPadding;
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
-        public static int ClauseGap3(string type)
+        public static int ClauseGap1(Type type)
         {
-            if (type.Equals("Unassigned"))
+            switch (type)
             {
-                return 5;
+                case Type.Unassigned:
+                    return Unassigned.ClauseGap1;
+                case Type.Parsimonious:
+                    return Parsimonious.ClauseGap1;
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
-        public static int ClauseRightPadding(string type)
+        public static int ClauseGap2(Type type)
         {
-            if (type.Equals("Unassigned"))
+            switch (type)
             {
-                return 9;
+                case Type.Unassigned:
+                    return Unassigned.ClauseGap2;
+                case Type.Parsimonious:
+                    return Parsimonious.ClauseGap2;
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
-        public static string Negate(string format, string type, Variable variable, int sweepLine, int paperHeight, List<Variable> variables)
+        public static int ClauseGap3(Type type)
         {
-            if (format.Equals("LaTeX"))
+            switch (type)
             {
-                if (type.Equals("Unassigned"))
-                {
-                    return LaTeX.Negate(variable, sweepLine, paperHeight);
-                }
+                case Type.Unassigned:
+                    return Unassigned.ClauseGap3;
+                case Type.Parsimonious:
+                    return Parsimonious.ClauseGap3;
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
-        internal static string ClauseTop(string format, string type, int sweepLine)
+        public static int ClauseRightPadding(Type type)
         {
-            if (format.Equals("LaTeX"))
+            switch (type)
             {
-                if (type.Equals("Unassigned"))
-                {
-                    return LaTeX.ClauseTop(sweepLine);
-                }
+                case Type.Unassigned:
+                    return Unassigned.ClauseRightPadding;
+                case Type.Parsimonious:
+                    return Parsimonious.ClauseRightPadding;
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
+        }
+        #endregion
+        #region Components
+        public static string Negate(Format format, Type type, Variable variable, int sweepLine, int paperHeight, List<Variable> variables)
+        {
+            switch (type)
+            {
+                case Type.Unassigned:
+                    return Unassigned.Negate(format, variable, sweepLine, paperHeight, variables);
+                case Type.Parsimonious:
+                    return Parsimonious.Negate(format, variable, sweepLine, paperHeight, variables);
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
-        internal static string SendWireToClause(string format, string type, Variable variable, int clauseNumber, int sweepLine, int paperHeight)
+        public static string ClauseTop(Format format, Type type, int sweepLine, List<Variable> variables)
         {
-            if (format.Equals("LaTeX"))
+            switch (type)
             {
-                if (type.Equals("Unassigned"))
-                {
-                    return LaTeX.SendWireToClause(variable, clauseNumber, sweepLine, paperHeight);
-                }
+                case Type.Unassigned:
+                    return Unassigned.ClauseTop(format, sweepLine, variables);
+                case Type.Parsimonious:
+                    return Parsimonious.ClauseTop(format, sweepLine, variables);
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
-        internal static string EndWire(string format, string type, Variable variable, int paperWidth)
+        public static string SendWireToClause(Format format, Type type, Variable variable, int clauseNumber, int sweepLine, int paperHeight, List<Variable> variables)
         {
-            if (format.Equals("LaTeX"))
+            switch (type)
             {
-                if (type.Equals("Unassigned"))
-                {
-                    return LaTeX.EndWire(variable, paperWidth);
-                }
+                case Type.Unassigned:
+                    return Unassigned.SendWireToClause(format, variable, clauseNumber, sweepLine, paperHeight, variables);
+                case Type.Parsimonious:
+                    return Parsimonious.SendWireToClause(format, variable, clauseNumber, sweepLine, paperHeight, variables);
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
+
+        public static string EndWire(Format format, Type type, Variable variable, int paperWidth)
+        {
+            switch (type)
+            {
+                case Type.Unassigned:
+                    return Unassigned.EndWire(format, variable, paperWidth);
+                case Type.Parsimonious:
+                    return Parsimonious.EndWire(format, variable, paperWidth);
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        #endregion
     }
 }

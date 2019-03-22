@@ -5,18 +5,16 @@ namespace Converter
     public class Variable
     {
         public int PrevX { get; private set; }
-        public int WireHeight { get; }
         public int Index { get; }
         public bool Value { get; private set; }
-        public string Color { get; }
-
-        public Variable(int index, string color)
+        public bool Up { get; private set; }
+        
+        public Variable(int index, bool up)
         {
             this.PrevX = 0;
-            this.WireHeight = 4 + 5 * index;
             this.Index = index;
             this.Value = true;
-            this.Color = color;
+            this.Up = up;
         }
 
         internal void Negate()
@@ -27,6 +25,11 @@ namespace Converter
         internal void UpdatePrevX(int newPrevX)
         {
             this.PrevX = newPrevX;
+        }
+
+        internal void Flip()
+        {
+            this.Up = !this.Up;
         }
     }
 
